@@ -1,0 +1,72 @@
+import string
+import random
+import time
+
+print('Hi, Welcome to the Password Customized Generetor.')
+time.sleep(2)
+
+
+def main_menu():
+    start_gen = input('To Generete a Password please press enter.')
+    if start_gen == "":
+        gen_dig()
+    else:
+        print('Invalid Selection')
+        main_menu()
+
+
+def gen_dig():
+    print('Your password must have numbers, letters and symbols.')
+    time.sleep(1)
+    print('It also must have a minimum of 6 digits and a maximum of 12')
+    time.sleep(1)
+    num_dig = input('How many digits do you want your password to have? ')
+    try:
+        num_dig = int(num_dig)
+        while num_dig < 6:
+            print('Your password is too short, try again.')
+            gen_dig()
+        while num_dig > 12:
+            print('Your password is too long, try again.')
+            gen_dig()
+        else:
+            print(f'Your pass is going to be {num_dig} digits long')
+            let_gen(num_dig)
+    except ValueError:
+        print('Invalid Selection')
+        gen_dig()
+
+
+def let_gen(num_dig):
+    num_letters = input('How many letters do you want your password to have?')
+    try:
+        num_letters = int(num_letters)
+        while num_letters >= num_dig:
+            print("Your password can't have more letters than numbers, try again.")
+            let_gen(num_dig)
+        else:
+            print(
+                f'Your pass is going to have {num_letters} letters, {num_dig - num_letters - 1} numbers and 1 symbol')
+            pass_gen(num_letters, num_dig)
+    except ValueError:
+        print('Invalid Selection')
+        let_gen(num_dig)
+
+
+a = ord('a')
+letters = [chr(i) for i in range(a, a+26)]
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+simbols = ['#', '%', '@', '%', '&']
+
+
+def pass_gen(num_letters, num_dig):
+    pass_list = [random.choice(simbols)]
+    while len(pass_list) < (num_dig - num_letters):
+        pass_list.append(random.choice(numbers))
+    while len(pass_list) < num_dig:
+        pass_list.append(random.choice(letters))
+    random.shuffle(pass_list)
+    print(''.join(pass_list))
+
+
+main_menu()
